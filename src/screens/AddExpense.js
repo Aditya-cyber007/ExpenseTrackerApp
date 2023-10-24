@@ -6,19 +6,92 @@ import { useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { TouchableOpacity } from "react-native";
 import { Categories } from "../components/Categories";
+import { useEffect } from "react";
+import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
-const AddExpense = () => {
+  
+
+
+
+
+const AddExpense = ({navigation}) => {
+
+  
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH,(user) => {
+      if(user != null && user.uid != null){
+        setUid(user.uid);
+      }
+      else{
+        console.log("user"+user);
+        navigation.navigate('Login')
+      }
+      });
+    
+  }, []);
+
+  
+
+
+
+    const [user, setUser] = useState();
+    const [uid, setUid] = useState('falseData');
+      // const myEmail = user.uid;
+
+   
 
   const [amount, setAmount] = useState("");
   const [title, setTitle] = useState("");
   const [expenseType, setExpenseType] = useState(1);
+  const [category, setCategory] = useState("Food");
   const [selectedDate, setSelectedDate] = useState("DD/MMY/YYY ");
-
-
   const [snackbarVisible, setSnackbarVisible] = useState(false);
 
+
+      const postdata = () => {
+        const options = {
+          method: "POST",
+          body: JSON.stringify(expense),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        fetch(
+          `https://expensetracker-50e59-default-rtdb.firebaseio.com/${uid}.json`,
+          
+          options
+        )
+    
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setSnackbarVisible(true);
+            setAmount("");
+            setTitle("");
+            setExpenseType(1);
+            setSelectedDate("DD/MMY/YYY ");
+            navigation.navigate("Activity");
+    
+          })
+          .catch((err) => console.log(err));
+      };
+
+
   const handleSaveExpense = () => {
-    setSnackbarVisible(true);
+
+    expense = {
+      amount: amount,
+      title: title,
+      expenseType: category,
+      selectedDate: selectedDate,
+    };
+   
+    postdata();
+
+
+  
   };
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -43,7 +116,7 @@ const AddExpense = () => {
   return (
     <View style={{}}>
       <View style={{alignItems:'center', position:'relative'}}>
-      <Image style={{height:280,width:340, alignItems:'center', marginTop:20}} source={require('../images/expenseBanner.png')} />
+      <Image style={{height:280,width:340, alignItems:'center', marginTop:20}} source={require('../../assets/images/expenseBanner.png')} />
       </View>
 
       {/* title input  */}
@@ -189,7 +262,7 @@ const AddExpense = () => {
                     }
               }
               key={index}
-              onPress={() => setExpenseType(item.id)}
+              onPress={() => {setExpenseType(item.id),setCategory(item.name)}}
             >
               <Text>{item.name}</Text>
             </TouchableOpacity>

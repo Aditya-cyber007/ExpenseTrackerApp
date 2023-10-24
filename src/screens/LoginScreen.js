@@ -59,7 +59,6 @@ const LoginScreen = ({navigation}) => {
       const response=await signInWithEmailAndPassword(auth,  email, password);
       console.log(response)
       alert('User logged in successfully');
-      // auth.setPersistence(Auth.Persistence.LOCAL);
     } catch (error) {
       Alert.alert('Signin failed', error.message);
     } finally {

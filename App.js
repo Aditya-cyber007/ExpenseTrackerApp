@@ -75,8 +75,8 @@ const InsideStackScreen = () => {
       >
 
       <Tab.Screen name='Home' component={DashboardScreen} options={{headerShown:false}} />
-      <Tab.Screen name='Analyse' component={ViewExpense} options={{headerShown:false}} />
-      <Tab.Screen name='Expense' component={AddExpense} options={{headerShown:false}} />
+      <Tab.Screen name='Analyse' component={ViewExpense } options={{headerShown:false}} />
+      <Tab.Screen name='Expense' component={AddExpense } options={{headerShown:false}} />
       <Tab.Screen name='Activity' component={ViewActivity} options={{headerShown:false}} />
       <Tab.Screen name='Account' component={Account} options={{headerShown:false}} />
 
