@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import {getExpenses} from './ViewActivity';
 
   
 
@@ -32,13 +33,9 @@ const AddExpense = ({navigation}) => {
     
   }, []);
 
-  
-
-
 
     const [user, setUser] = useState();
     const [uid, setUid] = useState('falseData');
-      // const myEmail = user.uid;
 
    
 
@@ -72,6 +69,7 @@ const AddExpense = ({navigation}) => {
             setTitle("");
             setExpenseType(1);
             setSelectedDate("DD/MMY/YYY ");
+            getExpenses();
             navigation.navigate("Activity");
     
           })

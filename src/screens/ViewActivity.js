@@ -87,6 +87,7 @@ const ViewActivity = ({navigation}) => {
     }
   }
 
+
   // refresh on scroll down
 
   const [refreshing, setRefreshing] = useState(false);
@@ -100,6 +101,8 @@ const ViewActivity = ({navigation}) => {
     }, 2000);
   }, []);
 
+
+
   return (
     <View>
       {showActivity? 
@@ -107,8 +110,8 @@ const ViewActivity = ({navigation}) => {
       refreshControl={
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
-      <View style={{alignItems:'center', position:'relative'}}>
-      <Image style={{height:300,width:400, alignItems:'center', marginTop:20}} source={require('../../assets/images/Activity.png')} />
+      <View style={{alignItems:'center', position:'relative',marginTop:0}}>
+      <Image style={{height:300,width:400, alignItems:'center', marginTop:20}} source={require('../../assets/images/ViewActivity.png')} />
       </View>
       {expenses.map((expense, index) => (
         <ActivityCard key={index} expense={expense} />
