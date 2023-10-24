@@ -100,7 +100,6 @@ const ViewActivity = ({navigation}) => {
     }, 2000);
   }, []);
 
-  
   return (
     <View>
       {showActivity? 
@@ -108,9 +107,8 @@ const ViewActivity = ({navigation}) => {
       refreshControl={
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
-
       <View style={{alignItems:'center', position:'relative'}}>
-      <Image style={{height:300,width:350, alignItems:'center', marginTop:20}} source={require('../../assets/images/viewActivity.png')} />
+      <Image style={{height:300,width:400, alignItems:'center', marginTop:20}} source={require('../../assets/images/Activity.png')} />
       </View>
       {expenses.map((expense, index) => (
         <ActivityCard key={index} expense={expense} />
