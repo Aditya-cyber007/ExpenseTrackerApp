@@ -1,4 +1,4 @@
-import { View, Text, Image} from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import { Snackbar } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
@@ -10,34 +10,22 @@ import { useEffect } from "react";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-import {getExpenses} from './ViewActivity';
+import { getExpenses } from "./ViewActivity";
 
-  
-
-
-
-
-const AddExpense = ({navigation}) => {
-
-  
+const AddExpense = ({ navigation }) => {
   useEffect(() => {
-    onAuthStateChanged(FIREBASE_AUTH,(user) => {
-      if(user != null && user.uid != null){
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      if (user != null && user.uid != null) {
         setUid(user.uid);
+      } else {
+        console.log("user" + user);
+        navigation.navigate("Login");
       }
-      else{
-        console.log("user"+user);
-        navigation.navigate('Login')
-      }
-      });
-    
+    });
   }, []);
 
-
-    const [user, setUser] = useState();
-    const [uid, setUid] = useState('falseData');
-
-   
+  const [user, setUser] = useState();
+  const [uid, setUid] = useState("falseData");
 
   const [amount, setAmount] = useState("");
   const [title, setTitle] = useState("");
@@ -46,50 +34,41 @@ const AddExpense = ({navigation}) => {
   const [selectedDate, setSelectedDate] = useState("DD/MMY/YYY ");
   const [snackbarVisible, setSnackbarVisible] = useState(false);
 
+  const postdata = () => {
+    const options = {
+      method: "POST",
+      body: JSON.stringify(expense),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    fetch(
+      `https://expensetracker-50e59-default-rtdb.firebaseio.com/${uid}.json`,
 
-      const postdata = () => {
-        const options = {
-          method: "POST",
-          body: JSON.stringify(expense),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-        fetch(
-          `https://expensetracker-50e59-default-rtdb.firebaseio.com/${uid}.json`,
-          
-          options
-        )
-    
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            setSnackbarVisible(true);
-            setAmount("");
-            setTitle("");
-            setExpenseType(1);
-            setSelectedDate("DD/MMY/YYY ");
-            getExpenses();
-            navigation.navigate("Activity");
-    
-          })
-          .catch((err) => console.log(err));
-      };
-
+      options
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setSnackbarVisible(true);
+        setAmount("");
+        setTitle("");
+        setExpenseType(1);
+        setSelectedDate("DD/MMY/YYY ");
+        navigation.navigate("Activity");
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleSaveExpense = () => {
-
     expense = {
       amount: amount,
       title: title,
       expenseType: category,
       selectedDate: selectedDate,
     };
-   
+
     postdata();
-
-
-  
   };
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -110,11 +89,18 @@ const AddExpense = ({navigation}) => {
     hideDatePicker();
   };
 
-
   return (
     <View style={{}}>
-      <View style={{alignItems:'center', position:'relative'}}>
-      <Image style={{height:280,width:340, alignItems:'center', marginTop:20}} source={require('../../assets/images/expenseBanner.png')} />
+      <View style={{ alignItems: "center", position: "relative" }}>
+        <Image
+          style={{
+            height: 280,
+            width: 400,
+            alignItems: "center",
+            marginTop: 20,
+          }}
+          source={require("../../assets/images/expenseBanner.png")}
+        />
       </View>
 
       {/* title input  */}
@@ -124,7 +110,7 @@ const AddExpense = ({navigation}) => {
           fontSize: 18,
           marginBottom: 5,
           fontWeight: "bold",
-          }}
+        }}
       >
         For What?
       </Text>
@@ -149,7 +135,6 @@ const AddExpense = ({navigation}) => {
           fontSize: 18,
           marginBottom: 5,
           fontWeight: "bold",
-
         }}
       >
         How Much?
@@ -177,23 +162,21 @@ const AddExpense = ({navigation}) => {
           fontSize: 18,
           marginBottom: 5,
           fontWeight: "bold",
-
         }}
       >
         When?
       </Text>
       <View>
         <TouchableOpacity
-          
           style={{
             width: "80%",
-          height: 50,
-          borderWidth: 1,
-          borderRadius: 10,
-          marginBottom: 20,
-          marginHorizontal: 20,
-          paddingHorizontal: 20,
-          justifyContent: "center",
+            height: 50,
+            borderWidth: 1,
+            borderRadius: 10,
+            marginBottom: 20,
+            marginHorizontal: 20,
+            paddingHorizontal: 20,
+            justifyContent: "center",
           }}
         >
           <Text onPress={showDatePicker}>Date : {selectedDate}</Text>
@@ -243,7 +226,6 @@ const AddExpense = ({navigation}) => {
                       alignItems: "center",
                       marginHorizontal: 5,
                       marginBottom: 11,
-
                     }
                   : {
                       display: "flex",
@@ -260,14 +242,16 @@ const AddExpense = ({navigation}) => {
                     }
               }
               key={index}
-              onPress={() => {setExpenseType(item.id),setCategory(item.name)}}
+              onPress={() => {
+                setExpenseType(item.id), setCategory(item.name);
+              }}
             >
               <Text>{item.name}</Text>
             </TouchableOpacity>
           );
         })}
       </View>
-      <TouchableOpacity title="Save" >
+      <TouchableOpacity title="Save">
         <Text
           style={{
             alignSelf: "center",
@@ -277,7 +261,7 @@ const AddExpense = ({navigation}) => {
             padding: 8,
             paddingHorizontal: 20,
             backgroundColor: "#14A44D",
-            color:'white',
+            color: "white",
           }}
           onPress={handleSaveExpense}
         >

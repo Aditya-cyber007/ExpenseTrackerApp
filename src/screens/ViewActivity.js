@@ -1,21 +1,17 @@
-import { View, Text,Button } from 'react-native'
-import React from 'react'
-import ActivityCard from '../components/ActivityCard'
-import { ScrollView } from 'react-native-gesture-handler';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { FIREBASE_AUTH } from '../../FirebaseConfig';
-import { onAuthStateChanged } from 'firebase/auth';
-import { Image } from 'react-native';
-import { TouchableOpacity } from 'react-native';
-import { RefreshControl } from 'react-native';
-import { useCallback } from 'react';
+import { View, Text, Button } from "react-native";
+import React from "react";
+import ActivityCard from "../components/ActivityCard";
+import { ScrollView } from "react-native-gesture-handler";
+import { useState } from "react";
+import { useEffect } from "react";
+import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+import { Image } from "react-native";
+import { TouchableOpacity } from "react-native";
+import { RefreshControl } from "react-native";
+import { useCallback } from "react";
 
-
-
-
-
-const ViewActivity = ({navigation}) => {
+const ViewActivity = ({ navigation }) => {
   //fetch data from firebase real time database
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,20 +19,20 @@ const ViewActivity = ({navigation}) => {
   const [user, setUser] = useState();
   const [uid, setUid] = useState();
 
-
   useEffect(() => {
-    onAuthStateChanged(FIREBASE_AUTH,(user) => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
       setUid(user.uid);
-      });
+    });
     getExpenses();
     checkActivity();
-
   }, []);
 
   const getExpenses = async () => {
-    await fetch( `https://expensetracker-50e59-default-rtdb.firebaseio.com/${uid}.json`)
-      .then(res => res.json())
-      .then(data => {
+    await fetch(
+      `https://expensetracker-50e59-default-rtdb.firebaseio.com/${uid}.json`
+    )
+      .then((res) => res.json())
+      .then((data) => {
         const transformedExpenses = [];
         for (const key in data) {
           transformedExpenses.push({
@@ -44,15 +40,15 @@ const ViewActivity = ({navigation}) => {
             ...data[key],
           });
         }
-        setExpenses(transformedExpenses);     
-        console.log(expenses)
+        setExpenses(transformedExpenses);
+        console.log(expenses);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err.message);
       });
-  }
- 
+  };
+
   // const deleteExpense = async (id) => {
   //   await fetch(`https://expensetracker-50e59-default-rtdb.firebaseio.com/${uid}/${id}.json`, {
   //     method: 'DELETE',
@@ -79,14 +75,12 @@ const ViewActivity = ({navigation}) => {
 
   const [showActivity, setShowActivity] = useState(false);
   const checkActivity = () => {
-    if (expenses.length === 0 ) {
+    if (expenses.length === 0) {
       setShowActivity(false);
-    }
-    else{
+    } else {
       setShowActivity(true);
     }
-  }
-
+  };
 
   // refresh on scroll down
 
@@ -94,58 +88,89 @@ const ViewActivity = ({navigation}) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    getExpenses();
     checkActivity();
+    getExpenses();
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  }, []);
-
-
+  }, [expenses]);
 
   return (
     <View>
-      {showActivity? 
-      <ScrollView 
-      refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      {showActivity ? (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
-      <View style={{alignItems:'center', position:'relative',marginTop:0}}>
-      <Image style={{height:300,width:400, alignItems:'center', marginTop:20}} source={require('../../assets/images/ViewActivity.png')} />
-      </View>
-      {expenses.map((expense, index) => (
-        <ActivityCard key={index} expense={expense} />
-        ))}
-    </ScrollView> : 
-
-      <ScrollView refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-
-        <View  style={{justifyContent:'center', alignItems:'center',marginTop:'50%'}}>
-      <Text style={{fontSize:20, fontWeight:'bold', color:'grey'}}>No Expenses</Text>
-        <Image style={{height:400,width:400}} source={require('../../assets/images/empty.png')} />
-      <TouchableOpacity title="Save" >
-        <Text
-          style={{
-            alignSelf: "center",
-            fontSize: 18,
-            borderRadius: 10,
-            borderWidth: 1,
-            padding: 8,
-            paddingHorizontal: 20,
-            backgroundColor: "#14A44D",
-            color:'white',
-          }}
-          onPress={() => navigation.navigate("Expense")}
+          <View style={{ position: "relative", marginTop: 0 }}>
+            <Image
+              style={{
+                height: 280,
+                width: 400,
+                alignSelf: "center",
+                marginTop: 20,
+              }}
+              source={require("../../assets/images/ViewActivity.png")}
+            />
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                color: "grey",
+                alignSelf: "flex-start",
+                padding: 10,
+              }}
+            >
+              Expenses
+            </Text>
+          </View>
+          {expenses.map((expense, index) => (
+            <ActivityCard key={index} expense={expense} />
+          ))}
+        </ScrollView>
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
-          Add Expense
-        </Text>
-      </TouchableOpacity>
-      </View>
-      </ScrollView>
-      }
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "50%",
+            }}
+          >
+            <Text style={{ fontSize: 20, fontWeight: "bold", color: "grey" }}>
+              No Expenses
+            </Text>
+            <Image
+              style={{ height: 400, width: 400 }}
+              source={require("../../assets/images/empty.png")}
+            />
+            <TouchableOpacity title="Save">
+              <Text
+                style={{
+                  alignSelf: "center",
+                  fontSize: 18,
+                  borderRadius: 10,
+                  borderWidth: 1,
+                  padding: 8,
+                  paddingHorizontal: 20,
+                  backgroundColor: "#14A44D",
+                  color: "white",
+                }}
+                onPress={() => navigation.navigate("Expense")}
+              >
+                Add Expense
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      )}
     </View>
-  )
-}
+  );
+};
 
-export default ViewActivity
+export default ViewActivity;

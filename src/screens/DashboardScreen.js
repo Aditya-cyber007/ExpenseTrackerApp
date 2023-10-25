@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Image, View } from 'react-native'
 import React from 'react'
 import { FIREBASE_AUTH } from '../../FirebaseConfig'
 // import { signOut } from 'firebase/auth'
@@ -10,10 +10,9 @@ const DashboardScreen = ({navigation}) => {
   
 
   return (
-    <View style={{flex:.35,justifyContent:'center',alignItems:'center'}}> 
-      <Text style={{fontSize:30 , marginBottom:100}} >Dashboard</Text>
-      <Button onPress={()=>{FIREBASE_AUTH.signOut()}} title ="Logout"/>
-    </View>
+    <View style={{alignItems:'center', position:'relative'}}>
+      <Image style={{height:280,width:400, alignItems:'center', marginTop:20}} source={require('../../assets/images/Dashboard.png')} />
+      </View>
 
   )
 }
