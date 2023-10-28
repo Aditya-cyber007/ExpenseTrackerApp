@@ -5,14 +5,14 @@ import { TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome"; // Change the icon library as needed
 import { useState } from "react";
+import CountryPicker from 'react-native-country-picker-modal'
 
-const Account = () => {
+const Account = ({navigation}) => {
   
-  const[currency,setCurrency]=useState("₹")
 
   const handleCurrencyChange = () => {
-    // Implement your currency change logic here
-
+    
+    setCountryVisible(true);
 
 
 
@@ -25,9 +25,20 @@ const Account = () => {
   const handleLogout = () => {
     // Implement your logout logic here
   };
+  const [countryVisible, setCountryVisible] = useState(false);
+  const [currency, setCurrency] = useState('INR');
+  const [countryName, setCountryName] = useState('India');
+  
+  const onSelect = (country) => {
+    setCurrency(country.currency);
+    setCountryName(country.name);
+  };
+  console.log(currency,countryName)
+  
 
   return (
     <View>
+
       <Image
         style={{ height: 280, width: 400, marginTop: 20, alignSelf: "center" }}
         source={require("../../assets/images/Account.png")}
@@ -68,13 +79,25 @@ const Account = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={handleCurrencyChange}
+            onPress={()=><CountryPicker/>}
           >
-            <Text style={styles.buttonText}>Change Currency</Text>
+            <CountryPicker 
+            
+            name={countryName}
+            withFlag
+            withEmoji
+            withCurrency
+            subregion="Southern Asia"   
+            
+            onSelect={onSelect}
+            visible={countryVisible}
+            >
+              <Text style={styles.buttonText}>Currency</Text>
+            </CountryPicker>
             <Icon
               name="arrow-right"
               size={15}
-              color="#3498db" // Change the icon color as needed
+              color="#3498db" // Change the icon color as neededxssxs
             />
           </TouchableOpacity>
           <TouchableOpacity

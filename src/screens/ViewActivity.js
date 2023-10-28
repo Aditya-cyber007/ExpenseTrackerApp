@@ -26,6 +26,7 @@ const ViewActivity = ({ navigation }) => {
     getExpenses();
     checkActivity();
   }, []);
+  
 
   const getExpenses = async () => {
     await fetch(
@@ -48,6 +49,7 @@ const ViewActivity = ({ navigation }) => {
         setError(err.message);
       });
   };
+
 
   // const deleteExpense = async (id) => {
   //   await fetch(`https://expensetracker-50e59-default-rtdb.firebaseio.com/${uid}/${id}.json`, {
@@ -82,6 +84,7 @@ const ViewActivity = ({ navigation }) => {
     }
   };
 
+
   // refresh on scroll down
 
   const [refreshing, setRefreshing] = useState(false);
@@ -98,11 +101,11 @@ const ViewActivity = ({ navigation }) => {
   return (
     <View>
       {showActivity ? (
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
+       <ScrollView
+       refreshControl={
+         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+       }
+     >
           <View style={{ position: "relative", marginTop: 0 }}>
             <Image
               style={{
@@ -128,6 +131,7 @@ const ViewActivity = ({ navigation }) => {
           {expenses.map((expense, index) => (
             <ActivityCard key={index} expense={expense} />
           ))}
+
         </ScrollView>
       ) : (
         <ScrollView

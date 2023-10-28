@@ -23,6 +23,7 @@ const Tab = createBottomTabNavigator();
 
 const InsideStackScreen = () => {
   return (
+
     <Tab.Navigator
       initialRouteName={"Home"}
       screenOptions={({ route }) => ({
@@ -91,6 +92,18 @@ const InsideStackScreen = () => {
 
      
     </Tab.Navigator>
+
+    // <Stack.Navigator>
+    //   <Stack.Screen
+    //     name="ChangeCurrency"
+    //     component={ChangeCurrency}
+    //     options={{ headerShown: false }}
+    //   />
+    // </Stack.Navigator>
+
+
+
+
     
   );
 };
@@ -129,14 +142,17 @@ const App = () => {
             component={InsideStackScreen}
             options={{ headerShown: false }}
           />
-        ) : (
-          <Stack.Screen
+          ) : (
+            <Stack.Screen
             name="Outside"
             component={OutsideStackScreen}
             options={{ headerShown: false }}
-          />
-        )}
+            />
+            )}
+            <Stack.Screen name="ChangeCurrency" component={ChangeCurrency} />
+            
       </Stack.Navigator>
+        
     </NavigationContainer>
   );
 };

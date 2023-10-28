@@ -1,112 +1,38 @@
+
 export const Currency=[
     {
         id:1,
-        name:'Indian Rupee',
+        code:'INR',
         symbol:'₹'
     },
     {
         id:2,
-        name:'US Dollar',
+        code:'USD',
         symbol:'$'
     },
     {
         id:3,
-        name:'Euro',
+        code:'EUR',
         symbol:'€'
     },
 
     {
         id:4,
-        name:'British Pound',
+        code:'GBP',
         symbol:'£'
     },
     {
         id:5,
-        name:'Japanese Yen',
-        symbol:'¥'
+        code:'AUD',
+        symbol:'A$'
     },
     {
         id:6,
-        name:'Chinese Yuan',
-        symbol:'¥'
-    },
-    {
-        id:7,
-        name:'Australian Dollar',
-        symbol:'$'
-    },
-    {
-        id:8,
-        name:'Canadian Dollar',
-        symbol:'$'
-    },
-    {
-        id:9,
-        name:'Swiss Franc',
-        symbol:'₣'
-    },
-    {
-        id:10,
-        name:'Hong Kong Dollar',
-        symbol:'$'
-    },
-    {
-        id:11,
-        name:'New Zealand Dollar',
-        symbol:'$'
-    },
-  
-    {
-        id:12,
-        name:'South African Rand',
-        symbol:'R'
-    },
-    {
-        id:13,
-        name:'Russian Ruble',
-        symbol:'₽'
-    },
-    {
-        id:14,
-        name:'Singapore Dollar',
-        symbol:'$'
-    },
-    {
-        id:15,
-        name:'Mexican Peso',
-        symbol:'$'
-    },
-    {
-        id:16,
-        name:'Indian Rupee',
-        symbol:'₹'
-    },
-    {
-        id:17,
-        name:'Brazilian Real',
-        symbol:'R$'
-    },
-    {
-        id:18,
-        name:'South Korean Won',
-        symbol:'₩'
-    },
-    {
-        id:19,
-        name:'Turkish Lira',
-        symbol:'₺'
-    },
- 
-
-    {
-        id:20,
-        name:'Polish Zloty',
-        symbol:'zł'
-    },
-    {
-        id:21,
-        name:'Thai Baht',
-        symbol:'฿'
-    },
+        code:'CAD',
+        symbol:'C$'
+    }
+    
+    
 
 ]
+//create a card to show all currency in scroll view

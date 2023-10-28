@@ -20,18 +20,18 @@ const AddExpense = ({ navigation }) => {
       } else {
         console.log("user" + user);
         navigation.navigate("Login");
+        
       }
     });
   }, []);
 
   const [user, setUser] = useState();
   const [uid, setUid] = useState("falseData");
-
   const [amount, setAmount] = useState("");
   const [title, setTitle] = useState("");
   const [expenseType, setExpenseType] = useState(1);
   const [category, setCategory] = useState("Food");
-  const [selectedDate, setSelectedDate] = useState("DD/MMY/YYY ");
+  const [selectedDate, setSelectedDate] = useState("YYYY-MM-DD");
   const [snackbarVisible, setSnackbarVisible] = useState(false);
 
   const postdata = () => {
@@ -54,7 +54,7 @@ const AddExpense = ({ navigation }) => {
         setAmount("");
         setTitle("");
         setExpenseType(1);
-        setSelectedDate("DD/MMY/YYY ");
+        setSelectedDate("YYYY-MM-DD");
         navigation.navigate("Activity");
       })
       .catch((err) => console.log(err));
@@ -84,7 +84,7 @@ const AddExpense = ({ navigation }) => {
   const handleConfirmDate = (date) => {
     const dt = new Date(date);
     const x = dt.toISOString().split("T")[0].split("-");
-    const y = x[2] + "-" + x[1] + "-" + x[0];
+    const y = x[0] + "-" + x[1] + "-" + x[2];
     setSelectedDate(y);
     hideDatePicker();
   };
